@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mijn gegevens – Superhond</title>
+  <link rel="stylesheet" href="../../css/style.css?v=1" />
+  <link rel="stylesheet" href="../../css/superhond.css?v=1" />
+  <style>
+    .form-section { margin-bottom: 2rem; }
+    .form-section h2 { margin-bottom: 0.5rem; font-size: 1.1rem; }
+    .error { color: red; font-size: 0.9rem; }
+  </style>
+</head>
+<body class="subpage klant-gegevens">
+  <header id="topbar" class="topbar blue">
+    <h1>Mijn gegevens</h1>
+    <nav>
+      <a href="../dashboard/">← Terug naar dashboard</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <form id="form-klant" class="form-grid" autocomplete="off">
+
+      <div class="form-section">
+        <h2>Persoonsgegevens</h2>
+        <input name="voornaam" class="input" placeholder="Voornaam" required />
+        <input name="achternaam" class="input" placeholder="Achternaam" required />
+        <input name="email" class="input" placeholder="E-mailadres" required type="email" />
+        <div id="email-error" class="error" style="display:none;">❗ Dit e-mailadres is al in gebruik.</div>
+        <input name="telefoon" class="input" placeholder="Telefoonnummer" />
+      </div>
+
+      <div class="form-section">
+        <h2>Bedrijfsgegevens (optioneel)</h2>
+        <input name="bedrijf" class="input" placeholder="Firmanaam" />
+        <input name="btw" class="input" placeholder="BTW-nummer (indien van toepassing)" />
+      </div>
+
+      <div class="form-section">
+        <h2>Adres</h2>
+        <input name="adres" class="input" placeholder="Straat en nummer" />
+        <input name="postcode" class="input" placeholder="Postcode" />
+        <input name="plaats" class="input" placeholder="Plaats" />
+        <select name="land" class="input">
+          <option value="BE">België</option>
+          <option value="NL">Nederland</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn">💾 Gegevens opslaan</button>
+      <div id="form-msg" class="muted" style="margin-top:1rem"></div>
+    </form>
+  </main>
+
+  <footer id="footer" class="footer">
+    <p class="muted">Superhond v0.28 • Klantportaal</p>
+  </footer>
+
+  <script src="../../js/layout.js?v=1"></script>
+  <script>
+    const form = document.getElementById("form-klant");
+    const emailError = document.getElementById("email-error");
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+
+      // 🔎 Simulatie: controle of e-mail uniek is (vervang met fetch naar backend)
+      const gebruikteEmails = ["jane@example.com", "info@superhond.be"];
+      if (gebruikteEmails.includes(data.email.toLowerCase())) {
+        emailError.style.display = "block";
+        return;
+      } else {
+        emailError.style.display = "none";
+      }
+
+      // Hier zou je data bewaren naar backend
+      document.getElementById("form-msg").textContent = "✅ Gegevens succesvol opgeslagen.";
+    });
+  </script>
+</body>
+</html>
